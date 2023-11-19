@@ -1,0 +1,22 @@
+{
+  "name": "postman-course",
+  "module": "index.ts",
+  "type": "commonjs",
+  "scripts": {
+    "test": "pnpm run leads && pnpm run leads_lists",
+    "leads": "ts-node src/run.ts --folder=leads",
+    "leads_lists": "ts-node src/run.ts --folder=leads_lists"
+  },
+  "devDependencies": {
+    "@types/minimist": "^1.2.5",
+    "@types/newman": "^5.3.6",
+    "@types/node": "^20.9.2",
+    "bun-types": "latest",
+    "dotenv": "^16.3.1",
+    "minimist": "^1.2.8",
+    "newman": "^6.0.0",
+    "newman-reporter-htmlextra": "^1.22.11",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}

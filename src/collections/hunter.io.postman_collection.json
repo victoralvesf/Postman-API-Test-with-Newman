@@ -1,0 +1,522 @@
+{
+	"info": {
+		"_postman_id": "85310960-34cf-42ab-9ef2-70096b4a59c1",
+		"name": "hunter.io",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7176929"
+	},
+	"item": [
+		{
+			"name": "leads",
+			"item": [
+				{
+					"name": "Recuperar todos leads cadastrados",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Status code name has string OK\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/leads",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"leads"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar novo lead",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 200, 201 or 202\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);",
+									"",
+									"    const { data } = pm.response.json();",
+									"    pm.environment.set(\"lead_id\", data.id);",
+									"});",
+									"",
+									"pm.test(\"Status code name has string Created\", function () {",
+									"    pm.response.to.have.status(\"Created\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.iterationData.get('lead_email')",
+									"pm.iterationData.get('lead_first_name')",
+									"pm.iterationData.get('lead_last_name')",
+									"pm.iterationData.get('lead_position')",
+									"pm.iterationData.get('lead_company')",
+									"pm.iterationData.get('lead_company_industry')",
+									"pm.iterationData.get('lead_company_size')",
+									"pm.iterationData.get('lead_confidence_score')",
+									"pm.iterationData.get('lead_website')"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"{{lead_email}}\",\n  \"first_name\": \"{{lead_first_name}}\",\n  \"last_name\": \"{{lead_last_name}}\",\n  \"position\": \"{{lead_position}}\",\n  \"company\": \"{{lead_company}}\",\n  \"company_industry\": \"{{lead_company_industry}}\",\n  \"company_size\": \"{{lead_company_size}}\",\n  \"confidence_score\": {{lead_confidence_score}},\n  \"website\": \"{{lead_website}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/leads",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"leads"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recuperar lead específico",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Status code name has string OK\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/leads/{{lead_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"leads",
+								"{{lead_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar lead",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Status code name has string No Content\", function () {",
+									"    pm.response.to.have.status(\"No Content\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"last_name\": \"Texas\",\n  \"company_size\": \"201-600 employees\",\n  \"confidence_score\": 94\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/leads/{{lead_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"leads",
+								"{{lead_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir lead",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Status code name has string No Content\", function () {",
+									"    pm.response.to.have.status(\"No Content\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/leads/{{lead_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"leads",
+								"{{lead_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"if (pm.response.code !== 204) {",
+							"    pm.test(\"Response time is less than 2000ms\", function () {",
+							"        pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"    });",
+							"}",
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "leads_lists",
+			"item": [
+				{
+					"name": "Recuperar todas listas de leads cadastradas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"",
+									"    const { data } = pm.response.json();",
+									"    const [list] = data.leads_lists",
+									"    pm.environment.set(\"leads_list_id\", list.id);",
+									"});",
+									"",
+									"pm.test(\"Status code name has string OK\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/leads_lists",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"leads_lists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recuperar lista de lead específica",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Status code name has string OK\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/leads_lists/{{leads_list_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"leads_lists",
+								"{{leads_list_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar nova lista de lead",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 200, 201 or 202\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);",
+									"",
+									"    const { data } = pm.response.json();",
+									"    pm.environment.set(\"new_leads_list_id\", data.id);",
+									"});",
+									"",
+									"pm.test(\"Status code name has string Created\", function () {",
+									"    pm.response.to.have.status(\"Created\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.iterationData.get('create_leads_list_name')"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"{{create_leads_list_name}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/leads_lists",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"leads_lists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar lista de lead",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Status code name has string No Content\", function () {",
+									"    pm.response.to.have.status(\"No Content\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.iterationData.get('edit_leads_list_name')"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"{{edit_leads_list_name}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/leads_lists/{{new_leads_list_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"leads_lists",
+								"{{new_leads_list_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir lista de lead",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Status code name has string No Content\", function () {",
+									"    pm.response.to.have.status(\"No Content\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/leads_lists/{{new_leads_list_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"leads_lists",
+								"{{new_leads_list_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{apikey}}",
+				"type": "string"
+			},
+			{
+				"key": "in",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "X-API-KEY",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
